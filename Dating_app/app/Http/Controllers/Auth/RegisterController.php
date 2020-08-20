@@ -63,10 +63,19 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        //dd($data['longitude']);
+        $userImage = $data['image']->store('user_image');
+        
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'image' => $userImage,
+            'latitude' => $data['latitude'],
+            'langitude' => $data['longitude'],
+            'date_of_birth' => $data['date_of_birth'],
+            'Gander' => $data['gender'],
+            
         ]);
     }
 }
