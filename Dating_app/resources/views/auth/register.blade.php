@@ -82,8 +82,8 @@
 
 
                         <div class="form-group row">
-                            <input type="text" name="latitude" id="latitude">
-                            <input type="text" name="longitude" id="longitude">
+                            <input type="hidden" name="latitude" id="latitude">
+                            <input type="hidden" name="longitude" id="longitude">
                             <label for="date_of_birth" class="col-md-4 col-form-label text-md-right">Date Of Birth</label>
 
                             <div class="col-md-6">

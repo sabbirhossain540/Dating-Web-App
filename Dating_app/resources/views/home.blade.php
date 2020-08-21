@@ -27,7 +27,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    <span style="color: red;">Dating</span> App
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -87,7 +87,8 @@
                 var mapObj = new GMaps({
                     el: '#map',
                     lat: position.coords.latitude,
-                    lng: position.coords.longitude
+                    lng: position.coords.longitude,
+                    zoom: 13
                   });
 
                 @foreach($users as $user)
@@ -97,8 +98,10 @@
                       lng: {{ $user->langitude }},
                       title: "dsfsvs",
                       infoWindow: {
-                        content: '<h4>Name:{{ $user->name }} <br><p>Birth Day: {{ $user->date_of_birth }}</p><br><p>Gender: {{ $user->Gander }}</p> </h4><div> <img src="{{ asset('img/test.jpg') }}" alt="" width="80px" height="80px"></div>',
-                        minWidth: 400
+                        content: '<div style="width: 100%;"><img class="card-img-top" src="{{ asset('img/test.jpg') }}" alt="Card image" width="30%" height="150px"><div class="card-body"><h5 class="card-title">{{ $user->name }}</h5><p class="card-text">Age: {{ $user->date_of_birth }}</p></div><ul class="list-group list-group-flush"><li class="list-group-item">Gander : Male</li><li class="list-group-item">Distance: 5KM</li></ul><div class="card-body"><a href="#" class="card-link">Like</a><a href="#" class="card-link">Dislike</a></div></div>',
+                        minWidth: 50,
+                        maxWidth: 350,
+                        minHeight:200,
                       }
                     }); 
 
