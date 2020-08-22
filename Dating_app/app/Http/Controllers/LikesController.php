@@ -55,6 +55,13 @@ class LikesController extends Controller
 	        
 	        return redirect(route('home'));
 	    }
+
+
+
+
+	    public function manageDislike($profile_user_id){
+	    	dd($profile_user_id);
+	    }
 	
 
 }

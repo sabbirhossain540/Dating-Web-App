@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\TempData;
 use DB;
 use Auth;
 
@@ -42,9 +43,13 @@ class HomeController extends Controller
                 ORDER BY distance;
             ');
 
-        $get_like_info = DB::select("SELECT * FROM tbl_likes WHERE user_id = $user->id AND both_likes = 1");
+        $get_like_info = DB::select("SELECT b.image, b.name, a.both_likes FROM tbl_likes a
+                                    INNER JOIN users b ON b.id = a.profile_id
+                                    WHERE a.user_id = $user->id AND a.likes = 1");
 
-        return view('home')->with('users', $get_user)->with('get_like_infos', $get_like_info);
+        $get_both_like_info = DB::select("SELECT * FROM tbl_likes WHERE user_id = $user->id AND both_likes = 1");
+
+        return view('home')->with('users', $get_user)->with('get_like_infos', $get_both_like_info)->with('user_like_info', $get_like_info);
 
         
 

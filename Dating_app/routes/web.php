@@ -33,4 +33,5 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('likes/{like}/edit', 'LikesController@manageLikes')->name('likes.edit');
+Route::get('likes/{like}/like', 'LikesController@manageLikes')->name('likes.edit');
+Route::get('likes/{like}/dislike', 'LikesController@manageDislike')->name('likes.manageDislike');

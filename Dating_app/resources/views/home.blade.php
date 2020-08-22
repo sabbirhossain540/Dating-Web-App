@@ -91,10 +91,106 @@
 
 
     <div id="map"></div>
-    <!-- Button trigger modal -->
-<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  Launch demo modal
-</button> -->
+    <br>
+    <div class="container">
+      <div class="row">
+
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-header">
+              Nearby Person
+            </div>
+            <div class="card-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Profile Picture</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Distance</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @foreach($users as $user)
+                    @if(Auth::user()->id != $user->id)
+                      <tr>
+                        <td><img src="{{ asset('storage/'.$user->image) }}" alt="Card image" width="80px" height="100px"></td>
+                        <td>{{ $user->name }}</td>
+                        <td>{{ $user->distance }} KM</td>
+                      </tr>
+                    @endif
+                  @endforeach
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-header">
+              Like List
+            </div>
+            <div class="card-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Profile Picture</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @foreach($user_like_info as $like_info)
+                    <tr>
+                      <td><img src="{{ asset('storage/'.$like_info->image) }}" alt="Card image" width="80px" height="100px"></td>
+                      <td>{{ $like_info->name }}</td>
+
+                      <td>@if($like_info->both_likes == 1)
+                            Mutual
+                          @else
+                            Not Mutual
+                          @endif
+
+                      </td>
+                    </tr>
+                  @endforeach
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-header">
+              Dislike List
+            </div>
+            <div class="card-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Image</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Distance</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br><br><br>
+
+    
 
 
 <!-- Modal -->
@@ -145,10 +241,10 @@
                               @endif
 
                               infoWindow: {
-                                content: '<div style="width: 100%;"><img class="card-img-top" src="{{ asset('img/test.jpg') }}" alt="Card image" width="30%" height="150px"><div class="card-body"><h5 class="card-title">{{ $user->name }}</h5><p class="card-text">Age: {{ $user->age }} years old</p></div><ul class="list-group list-group-flush"><li class="list-group-item">Gander : @if($user->Gander == 0) Male @else Female @endif</li><li class="list-group-item">Distance: {{ $user->distance }} KM</li><li class="list-group-item"></li></ul><div class="card-body"><a href="{{ route('likes.edit',$user->id) }}" class="card-link">@if($get_like_info->profile_id == $user->id) <span style="color:green;">Like </span> @else Like @endif</a><a href="#" class="card-link">Dislike</a></div></div>',
-                                minWidth: 50,
+                                content: '<div style="width: 100%; padding-left:50px;"><img src="{{ asset('storage/'.$user->image) }}" alt="Card image" width="70% !important" height="150px"><div class="card-body"><h5 class="card-title">{{ $user->name }}</h5><p class="card-text">Age: {{ $user->age }} years old</p></div><ul class="list-group list-group-flush"><li class="list-group-item">Gander : @if($user->Gander == 0) Male @else Female @endif</li><li class="list-group-item">Distance: {{ $user->distance }} KM</li></ul><div class="card-body">@if(Auth::user()->id != $user->id) @if($get_like_info->profile_id == $user->id)<a href="#" class="card-link"><span style="color:green">Like</span></a> @else <a href="{{ route('likes.edit',$user->id) }}" class="card-link">Like</a> @endif<a href="{{ route('likes.manageDislike',$user->id) }}" class="card-link">Dislike</a>@endif</div></div>',
+                                minWidth: 20,
                                 maxWidth: 350,
-                                minHeight:200,
+                                minHeight:250,
                               }
                             });
 
@@ -161,8 +257,8 @@
                           title:"{{ $user->name }}",
 
                           infoWindow: {
-                            content: '<div style="width: 100%;"><img class="card-img-top" src="{{ asset('img/test.jpg') }}" alt="Card image" width="30%" height="150px"><div class="card-body"><h5 class="card-title">{{ $user->name }}</h5><p class="card-text">Age: {{ $user->age }} years old</p></div><ul class="list-group list-group-flush"><li class="list-group-item">Gander : @if($user->Gander == 0) Male @else Female @endif</li><li class="list-group-item">Distance: {{ $user->distance }} KM</li><li class="list-group-item"></li></ul><div class="card-body"><a href="{{ route('likes.edit',$user->id) }}" class="card-link">Like</a><a href="#" class="card-link">Dislike</a></div></div>',
-                            minWidth: 50,
+                            content: '<div style="width: 100%; padding-left:50px;"><img class="card-img-top" src="{{ asset('storage/'.$user->image) }}" alt="Card image" width="50% !important" height="150px"><div class="card-body"><h5 class="card-title">{{ $user->name }}</h5><p class="card-text">Age: {{ $user->age }} years old</p></div><ul class="list-group list-group-flush"><li class="list-group-item">Gander : @if($user->Gander == 0) Male @else Female @endif</li><li class="list-group-item">Distance: {{ $user->distance }} KM</li><li class="list-group-item"></li></ul><div class="card-body"><a href="{{ route('likes.edit',$user->id) }}" class="card-link">Like</a><a href="#" class="card-link">Dislike</a></div></div>',
+                            minWidth: 20,
                             maxWidth: 350,
                             minHeight:200,
                           }
