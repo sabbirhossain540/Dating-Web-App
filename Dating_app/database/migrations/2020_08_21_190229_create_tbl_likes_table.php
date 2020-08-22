@@ -19,6 +19,7 @@ class CreateTblLikesTable extends Migration
             $table->integer('profile_id');
             $table->integer('likes')->nullable()->comment('0=no, 1 = yes');
             $table->integer('both_likes')->nullable()->comment('0=no, 1 = yes');
+            $table->integer('dislikes')->nullable()->comment('0=no, 1 = yes');
             $table->timestamps();
         });
     }
