@@ -74,10 +74,52 @@
                 </div>
             </div>
 </nav>
+                @if(session()->has('success'))
+                    <script type="text/javascript">
+                        $( document ).ready(function() {
+                            $('#exampleModal').modal('show');
+                        });     
+                     </script>
+                @endif
+
+                @if(session()->has('error'))
+                    <div class="alert alert-warning">
+                        {{ session()->get('error') }}
+                    </div>
+                @endif
 
 
 
     <div id="map"></div>
+    <!-- Button trigger modal -->
+<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Launch demo modal
+</button> -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Messege</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Congratulations. Both are like each Other
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
 
 
     <script>
@@ -92,19 +134,40 @@
                   });
 
                 @foreach($users as $user)
+                    @if($get_like_infos != null)
+                        @foreach($get_like_infos as $get_like_info)
+                            var m = mapObj.addMarker({
+                              lat: {{ $user->latitude }},
+                              lng: {{ $user->langitude }},
+                              title:"{{ $user->name }}",
+                              @if($get_like_info->profile_id == $user->id)
+                                icon: "https://cdn.mapmarker.io/api/v1/font-awesome/v5/pin?icon=fa-star-solid&size=50&hoffset=0&voffset=-1",
+                              @endif
 
-                    var m = mapObj.addMarker({
-                      lat: {{ $user->latitude }},
-                      lng: {{ $user->langitude }},
-                      title: "dsfsvs",
-                      infoWindow: {
-                        content: '<div style="width: 100%;"><img class="card-img-top" src="{{ asset('img/test.jpg') }}" alt="Card image" width="30%" height="150px"><div class="card-body"><h5 class="card-title">{{ $user->name }}</h5><p class="card-text">Age: {{ $user->date_of_birth }}</p></div><ul class="list-group list-group-flush"><li class="list-group-item">Gander : Male</li><li class="list-group-item">Distance: 5KM</li></ul><div class="card-body"><a href="#" class="card-link">Like</a><a href="#" class="card-link">Dislike</a></div></div>',
-                        minWidth: 50,
-                        maxWidth: 350,
-                        minHeight:200,
-                      }
-                    }); 
+                              infoWindow: {
+                                content: '<div style="width: 100%;"><img class="card-img-top" src="{{ asset('img/test.jpg') }}" alt="Card image" width="30%" height="150px"><div class="card-body"><h5 class="card-title">{{ $user->name }}</h5><p class="card-text">Age: {{ $user->age }} years old</p></div><ul class="list-group list-group-flush"><li class="list-group-item">Gander : @if($user->Gander == 0) Male @else Female @endif</li><li class="list-group-item">Distance: {{ $user->distance }} KM</li><li class="list-group-item"></li></ul><div class="card-body"><a href="{{ route('likes.edit',$user->id) }}" class="card-link">@if($get_like_info->profile_id == $user->id) <span style="color:green;">Like </span> @else Like @endif</a><a href="#" class="card-link">Dislike</a></div></div>',
+                                minWidth: 50,
+                                maxWidth: 350,
+                                minHeight:200,
+                              }
+                            });
 
+                        @endforeach
+
+                    @else
+                        var m = mapObj.addMarker({
+                          lat: {{ $user->latitude }},
+                          lng: {{ $user->langitude }},
+                          title:"{{ $user->name }}",
+
+                          infoWindow: {
+                            content: '<div style="width: 100%;"><img class="card-img-top" src="{{ asset('img/test.jpg') }}" alt="Card image" width="30%" height="150px"><div class="card-body"><h5 class="card-title">{{ $user->name }}</h5><p class="card-text">Age: {{ $user->age }} years old</p></div><ul class="list-group list-group-flush"><li class="list-group-item">Gander : @if($user->Gander == 0) Male @else Female @endif</li><li class="list-group-item">Distance: {{ $user->distance }} KM</li><li class="list-group-item"></li></ul><div class="card-body"><a href="{{ route('likes.edit',$user->id) }}" class="card-link">Like</a><a href="#" class="card-link">Dislike</a></div></div>',
+                            minWidth: 50,
+                            maxWidth: 350,
+                            minHeight:200,
+                          }
+                        });
+                    @endif
 
                 @endforeach
 
