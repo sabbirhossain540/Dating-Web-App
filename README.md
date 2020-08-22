@@ -10,7 +10,7 @@ Must allow your browser location. Otherwise project can not work properly.
 ![8](https://user-images.githubusercontent.com/36231104/90963076-c35ce200-e4d6-11ea-8b5c-b21c0fced209.jpg)
 
 
-# Feature in this App
+# Feature of this App
 1. Front View Page:
 ![1](https://user-images.githubusercontent.com/36231104/90962854-fa31f880-e4d4-11ea-90bc-83120851bbe9.jpg)
 
