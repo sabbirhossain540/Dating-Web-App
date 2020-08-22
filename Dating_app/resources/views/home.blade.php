@@ -77,7 +77,7 @@
                 @if(session()->has('success'))
                     <script type="text/javascript">
                         $( document ).ready(function() {
-                            $('#exampleModal').modal('show');
+                            $('#messageModal').modal('show');
                         });     
                      </script>
                 @endif
@@ -131,6 +131,7 @@
               Like List
             </div>
             <div class="card-body">
+              @if($user_like_info != null)
               <table class="table">
                 <thead>
                   <tr>
@@ -156,6 +157,9 @@
                   @endforeach
                 </tbody>
               </table>
+              @else
+                    <h3 class="text-center">No Data Found</h3>
+                  @endif
             </div>
           </div>
         </div>
@@ -166,22 +170,28 @@
               Dislike List
             </div>
             <div class="card-body">
+              @if($get_dislike_infos != null)
               <table class="table">
                 <thead>
                   <tr>
                     <th scope="col">Image</th>
                     <th scope="col">Name</th>
-                    <th scope="col">Distance</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                  </tr>
+                  
+                    @foreach($get_dislike_infos as $get_dislike_info)
+                    <tr>
+                      <td><img src="{{ asset('storage/'.$get_dislike_info->image) }}" alt="Card image" width="80px" height="100px"></td>
+                        <td>{{ $get_dislike_info->name }}</td>
+                    </tr>
+                    @endforeach
+                  
                 </tbody>
               </table>
+              @else
+                    <h3 class="text-center">No Data Found</h3>
+                  @endif
             </div>
           </div>
         </div>
@@ -194,7 +204,7 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -204,16 +214,27 @@
         </button>
       </div>
       <div class="modal-body">
-        Congratulations. Both are like each Other
+        <h3 class="text-center" style="color: purple;">Congratulations. <br> It's a Match!</h3>
+        
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
 </div>
 
 
+<!-- Footer -->
+<footer class="page-footer font-small blue pt-4">
+  <!-- Copyright -->
+  <div class="footer-copyright text-center py-3">© 2020 Developed By:
+    <a href="#"> Md Sabbir Hossain</a>
+  </div>
+  <!-- Copyright -->
+
+</footer>
+<!-- Footer -->
 
 
 
@@ -230,8 +251,8 @@
                   });
 
                 @foreach($users as $user)
-                    @if($get_like_infos != null)
-                        @foreach($get_like_infos as $get_like_info)
+                    @if($get_both_like_info != null)
+                        @foreach($get_both_like_info as $get_like_info)
                             var m = mapObj.addMarker({
                               lat: {{ $user->latitude }},
                               lng: {{ $user->langitude }},
@@ -240,11 +261,12 @@
                                 icon: "https://cdn.mapmarker.io/api/v1/font-awesome/v5/pin?icon=fa-star-solid&size=50&hoffset=0&voffset=-1",
                               @endif
 
+
                               infoWindow: {
-                                content: '<div style="width: 100%; padding-left:50px;"><img src="{{ asset('storage/'.$user->image) }}" alt="Card image" width="70% !important" height="150px"><div class="card-body"><h5 class="card-title">{{ $user->name }}</h5><p class="card-text">Age: {{ $user->age }} years old</p></div><ul class="list-group list-group-flush"><li class="list-group-item">Gander : @if($user->Gander == 0) Male @else Female @endif</li><li class="list-group-item">Distance: {{ $user->distance }} KM</li></ul><div class="card-body">@if(Auth::user()->id != $user->id) @if($get_like_info->profile_id == $user->id)<a href="#" class="card-link"><span style="color:green">Like</span></a> @else <a href="{{ route('likes.edit',$user->id) }}" class="card-link">Like</a> @endif<a href="{{ route('likes.manageDislike',$user->id) }}" class="card-link">Dislike</a>@endif</div></div>',
-                                minWidth: 20,
-                                maxWidth: 350,
-                                minHeight:250,
+                                content: '<div style="width: 80%;"><img src="{{ asset('storage/'.$user->image) }}" alt="Card image" width="70% !important" height="150px"><div class="card-body"><h5 class="card-title">{{ $user->name }}</h5><p class="card-text">Age: {{ $user->age }} years old</p></div><ul class="list-group "><li class="list-group-item">Gander : @if($user->Gander == 0) Male @else Female @endif</li><li class="list-group-item">Distance: {{ $user->distance }} KM</li></ul><div class="card-body">@if(Auth::user()->id != $user->id) @if($get_like_info->profile_id == $user->id)<a href="#" class="card-link"><span style="color:green">Like</span></a> @else <a href="{{ route('likes.edit',$user->id) }}" class="card-link">Like</a> @endif<a href="{{ route('likes.manageDislike',$user->id) }}" class="card-link"><span style="color:red">Dislike</span></a>@endif</div></div>',
+                                minWidth: 250,
+                                maxWidth: 250,
+                                minHeight:300,
                               }
                             });
 
@@ -257,10 +279,10 @@
                           title:"{{ $user->name }}",
 
                           infoWindow: {
-                            content: '<div style="width: 100%; padding-left:50px;"><img class="card-img-top" src="{{ asset('storage/'.$user->image) }}" alt="Card image" width="50% !important" height="150px"><div class="card-body"><h5 class="card-title">{{ $user->name }}</h5><p class="card-text">Age: {{ $user->age }} years old</p></div><ul class="list-group list-group-flush"><li class="list-group-item">Gander : @if($user->Gander == 0) Male @else Female @endif</li><li class="list-group-item">Distance: {{ $user->distance }} KM</li><li class="list-group-item"></li></ul><div class="card-body"><a href="{{ route('likes.edit',$user->id) }}" class="card-link">Like</a><a href="#" class="card-link">Dislike</a></div></div>',
-                            minWidth: 20,
-                            maxWidth: 350,
-                            minHeight:200,
+                            content: '<div style="width: 100%"><img class="card-img-top" src="{{ asset('storage/'.$user->image) }}" alt="Card image" width="50% !important" height="150px" style="padding=""><div class="card-body"><h5 class="card-title">{{ $user->name }}</h5><p class="card-text"50px;>Age: {{ $user->age }} years old</p></div><ul class="list-group list-group-flush"><li class="list-group-item">Gander : @if($user->Gander == 0) Male @else Female @endif</li><li class="list-group-item">Distance: {{ $user->distance }} KM</li></ul><div class="card-body">@if(Auth::user()->id != $user->id)<a href="{{ route('likes.edit',$user->id) }}" class="card-link">Like</a><a href="{{ route('likes.manageDislike',$user->id) }}" class="card-link">Dislike</a>@endif</div></div>',
+                            minWidth: 250,
+                            maxWidth: 250,
+                            minHeight:300,
                           }
                         });
                     @endif
