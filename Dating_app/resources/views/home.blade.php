@@ -113,7 +113,7 @@
                   @foreach($users as $user)
                     @if(Auth::user()->id != $user->id)
                       <tr>
-                        <td><img src="{{ asset('storage/'.$user->image) }}" alt="Card image" width="80px" height="100px"></td>
+                        <td><img src="{{ asset('storage/'.$user->image) }}" alt="Card image" width="80px" height="90px"></td>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->distance }} KM</td>
                       </tr>
@@ -143,7 +143,7 @@
                 <tbody>
                   @foreach($user_like_info as $like_info)
                     <tr>
-                      <td><img src="{{ asset('storage/'.$like_info->image) }}" alt="Card image" width="80px" height="100px"></td>
+                      <td><img src="{{ asset('storage/'.$like_info->image) }}" alt="Card image" width="80px" height="90px"></td>
                       <td>{{ $like_info->name }}</td>
 
                       <td>@if($like_info->both_likes == 1)
@@ -182,7 +182,7 @@
                   
                     @foreach($get_dislike_infos as $get_dislike_info)
                     <tr>
-                      <td><img src="{{ asset('storage/'.$get_dislike_info->image) }}" alt="Card image" width="80px" height="100px"></td>
+                      <td><img src="{{ asset('storage/'.$get_dislike_info->image) }}" alt="Card image" width="80px" height="90px"></td>
                         <td>{{ $get_dislike_info->name }}</td>
                     </tr>
                     @endforeach

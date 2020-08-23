@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class TempData extends Model
 {
-    protected $fillable = ['latitude', 'longitude'];
+    protected $fillable = ['user_id','latitude', 'longitude'];
 }

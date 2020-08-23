@@ -27,9 +27,10 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-
-        $temp_data = TempData::find(\DB::table('temp_data')->max('id'));
         $user = Auth::user();
+
+        $temp_data = DB::table('temp_data')->where('user_id', $user->id)->latest('id')->first();
+
         $circle_radius = 9500;
         $max_distance = 5;
         $lat = $temp_data->latitude;

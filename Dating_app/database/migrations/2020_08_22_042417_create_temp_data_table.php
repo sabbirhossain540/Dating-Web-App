@@ -15,6 +15,7 @@ class CreateTempDataTable extends Migration
     {
         Schema::create('temp_data', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('user_id');
             $table->string('latitude');
             $table->string('longitude');
             $table->timestamps();

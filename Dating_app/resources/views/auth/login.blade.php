@@ -10,11 +10,33 @@
     $( document ).ready(function() {
         if(navigator.geolocation){
             navigator.geolocation.getCurrentPosition(function(position){
-                console.log(position.coords.longitude);
-                $("input#latitude").val(position.coords.latitude);
-                $("input#longitude").val(position.coords.longitude);
+                var getLatitude = position.coords.latitude;
+                var getlongitude = position.coords.longitude;
+
+                console.log(getLatitude);
+
+                if(getLatitude == null){
+                    getLatitude = '23.7829';
+                }
+
+                if(getlongitude == null){
+                    getlongitude = '90.3954';
+                }
+
+                console.log(getLatitude);
+
+                $("input#latitude").val(getLatitude);
+                $("input#longitude").val(getlongitude);
             });
         }else{
+
+                var getLatitude = '23.7829';
+                var getlongitude = '90.3954';
+                
+                console.log(getLatitude);
+
+                $("input#latitude").val(getLatitude);
+                $("input#longitude").val(getlongitude);
             console.log("geolocation is not supported");
         }
     });
