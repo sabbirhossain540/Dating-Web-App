@@ -48,6 +48,7 @@ class HomeController extends Controller
         $get_like_info = DB::select("SELECT b.image, b.name, a.both_likes FROM tbl_likes a
                                     INNER JOIN users b ON b.id = a.profile_id
                                     WHERE a.user_id = $user->id AND a.likes = 1");
+        
 
         $get_both_like_info = DB::select("SELECT * FROM tbl_likes WHERE user_id = $user->id AND both_likes = 1");
 

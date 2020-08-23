@@ -7,7 +7,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <script src="http://maps.google.com/maps/api/js"></script>
+    <script src="https://maps.google.com/maps/api/js"></script>
        <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -94,11 +94,20 @@
     <br>
     <div class="container">
       <div class="row">
-
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <h5 class="text-center"><img src="{{ asset('img/currentposition.png') }}" alt="" width="25px" height="25px">Current Position  <img src="{{ asset('img/default.jpg') }}" alt="" width="25px" height="25px">Nearby People  <img src="{{ asset('img/mutual.png') }}" alt="" width="25px" height="25px">Mutual Friends </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="row">
         <div class="col-md-4">
           <div class="card">
             <div class="card-header">
-              Nearby Person
+              Nearby People
             </div>
             <div class="card-body">
               <table class="table">
@@ -149,7 +158,7 @@
                       <td>@if($like_info->both_likes == 1)
                             Mutual
                           @else
-                            Not Mutual
+                            Friends
                           @endif
 
                       </td>
@@ -174,7 +183,7 @@
               <table class="table">
                 <thead>
                   <tr>
-                    <th scope="col">Image</th>
+                    <th scope="col">Profile Picture</th>
                     <th scope="col">Name</th>
                   </tr>
                 </thead>
@@ -247,8 +256,23 @@
                     el: '#map',
                     lat: position.coords.latitude,
                     lng: position.coords.longitude,
-                    zoom: 13
+                    zoom: 13,
+                    
                   });
+
+
+                var m = mapObj.addMarker({
+                              lat: position.coords.latitude,
+                              lng: position.coords.longitude,
+                              title:"{{ $user->name }}",
+                              icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
+                              infoWindow: {
+                                content: '<div style="width: 80%;"><h1>Current Position</h1></div>',
+                                minWidth: 250,
+                                maxWidth: 250,
+                                minHeight:300,
+                              }
+                            });
 
                 @foreach($users as $user)
                     @if($get_both_like_info != null)
@@ -288,6 +312,13 @@
                     @endif
 
                 @endforeach
+
+                // var m = mapObj.addMarker({
+                //           lat: '23.7829',
+                //           lng: '90.3954',
+                //           title:"{{ $user->name }}",
+                //           }
+                //         });
 
             });
         }else{
