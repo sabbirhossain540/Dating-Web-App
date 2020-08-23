@@ -30,7 +30,6 @@ class HomeController extends Controller
         $user = Auth::user();
 
         $temp_data = DB::table('temp_data')->where('user_id', $user->id)->latest('id')->first();
-
         $circle_radius = 9500;
         $max_distance = 5;
         $lat = $temp_data->latitude;

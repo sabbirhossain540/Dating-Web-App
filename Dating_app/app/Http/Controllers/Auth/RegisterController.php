@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use App\TempData;
 
 class RegisterController extends Controller
 {
@@ -66,7 +67,7 @@ class RegisterController extends Controller
         //dd($data['longitude']);
         $userImage = $data['image']->store('user_image');
         
-        return User::create([
+        $registerData =  User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
@@ -77,5 +78,15 @@ class RegisterController extends Controller
             'Gander' => $data['gender'],
             
         ]);
+
+        $temp_user = User::find(\DB::table('users')->max('id'));
+
+        TempData::create([
+            'user_id' => $temp_user->id,
+            'latitude' => $data['latitude'],
+            'longitude' => $data['longitude'],
+        ]);
+
+        return $registerData;
     }
 }
